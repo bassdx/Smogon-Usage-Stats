@@ -101,6 +101,7 @@ def plot_usage(usage_dict, hi=1, lo=None):
 	if not os.path.exists('figs'):
 		os.makedirs('figs')
 	fig.savefig('figs/%s_usage.png' %(tier), bbox_inches='tight')
+	fig.clf()
 	
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description='Script for plotting usage stats')
