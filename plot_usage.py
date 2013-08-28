@@ -22,7 +22,7 @@ def parse_usage_from_txt(fname):
 	with open(fname) as tf:
 		for lno, line in enumerate(tf.readlines()):
 			line = line.rstrip()
-			if 	lno == 0:
+			if lno == 0:
 				usage_dict['total'] = int(line.split(' ')[-1])
 			elif lno == 1:
 				usage_dict['weight'] = float(line.split(' ')[-1])
@@ -82,7 +82,14 @@ def plot_usage(usage_dict, hi=1, lo=None):
 	ax = fig.add_subplot(111)
 	
     # Our graph of choice is a bar chart. Purple for smogon spirit!
-	ax.barh(y_pos, usage, align='center', facecolor='#A020F0') 
+	rects = ax.barh(y_pos, usage, align='center', facecolor='#A020F0')
+	
+	# Label the bars with their values so they are easier to interpret
+	for perc, rect in zip(usage, rects):
+		x = .98 * float(rect.get_width())
+		y = rect.get_y() + rect.get_height() / 2.0
+		ax.text(x, y, '%2.1f' %(perc), ha='right', va='center', color='w',
+				size='xx-small')
 	
 	# Place Overall information in the title
 	ax.set_title('Tier: %s (Rank %d-%d) \n'
